@@ -1,13 +1,12 @@
 #Évaluer une expression
-
 import sys
 
+ 
+argument = sys.argv[1]
 
-argument = "4 + 21"
 
-
-
-def evaluer(suite = argument):
+#Transformer la chaine de caractere en Liste avec des int
+def string_to_liste(suite):
     calcule = []
     calcule2 =[]
     chiffre = ""
@@ -15,11 +14,10 @@ def evaluer(suite = argument):
 
         if j == len(suite)-1:
             if suite[j]!=" ":
-                if chiffre != "":
+                if chiffre != "" or suite[j].isnumeric():
                     chiffre += suite[j]
                     calcule.append(chiffre)
                     break
-
         if suite[j].isnumeric():
             chiffre += suite[j]
 
@@ -30,18 +28,77 @@ def evaluer(suite = argument):
                     chiffre = ""
                 calcule.append(suite[j])
         
-    
     for k in calcule:
         if k.isnumeric():
             calcule2.append(int(k))
         
         else :
             calcule2.append(k)
-    
-    #Calcule
-    for l in range(0,len(calcule2)):
-        if calcule2[l] == "+":
-            print((calcule2[l-1])+(calcule2[l+1]))
-            
 
-evaluer()
+    return calcule2
+ 
+
+#Calcule d'abord les * les / et les %, puis + et - 
+def calcule_prioritaire(calcule2=argument): 
+    argument2 = calcule2
+    resultat_final=0
+
+    #Calcule des *, /, % en priorité
+    while ("*" in argument2) or ("/" in argument2) or ("%" in argument2):
+        for m in range(0,len(argument2)):
+
+            if argument2[m] == "*":
+                argument2[m] = argument2[m-1]*argument2[m+1]
+                del argument2[m-1]
+                del argument2[m]
+                break
+                
+            elif argument2[m] == "/":
+                argument2[m] = argument2[m-1]/argument2[m+1]
+                del argument2[m-1]
+                del argument2[m]
+                break
+
+            elif argument2[m] == "%":
+                argument2[m] = argument2[m-1]%argument2[m+1]
+                del argument2[m-1]
+                del argument2[m]
+                break       
+    #Calcule tant qu'il y a une addition ou une soustraction
+    while ("+" in argument2) or ("-" in argument2):
+        for l in range(0,len(argument2)):
+            if argument2[l] == "+":
+                argument2[l-1] += argument2[l+1]
+                resultat_final = argument2[0]
+                del argument2[l:l+2]
+                break
+
+            if argument2[l] == "-":
+                argument2[l-1] -= argument2[l+1]
+                resultat_final = argument2[0]
+                del argument2[l:l+2]
+                break
+    
+    return resultat_final
+
+#Calcule de l'argument avec priorité sur les parenthese
+def calcule_final(calcule2):
+    argument2 = string_to_liste(calcule2)
+    resultat_final=[]
+    variable = []
+    while "(" in argument2:
+        for n in range(0,len(argument2)):
+            if argument2[n]=="(":
+                for o in range(0, len(argument2)):
+                    if argument2[o] == ")":
+                        variable.extend(argument2[n+1:o])
+                        chiffre = calcule_prioritaire(variable)
+                        argument2[n] = chiffre
+                        del argument2[n+1 : o+1]
+                        resultat_final = calcule_prioritaire(argument2)
+
+                        return print(resultat_final)
+
+                     
+calcule_final(argument)
+
