@@ -48,8 +48,7 @@ def trouver_forme():
     for i in range(0, len(tab)):
         for j in range(0, len(tab[0])):
             if tab[i][j]== trouver[0][0]:
-                print(f"i : {i}, j : {j}")
-
+                
                 for k in range(0, len(trouver)):
                     for l in range(0, len(trouver)):
                         if trouver[k][l]==" ":
