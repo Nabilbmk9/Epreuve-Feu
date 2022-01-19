@@ -91,13 +91,21 @@ def calcule_final(calcule2):
             if argument2[n]=="(":
                 for o in range(0, len(argument2)):
                     if argument2[o] == ")":
+                        #les parenthese dans une variable
                         variable.extend(argument2[n+1:o])
+                        #Calculer la variable
                         chiffre = calcule_prioritaire(variable)
+                        #remplacer les parentheses par le resultat de la variable
                         argument2[n] = chiffre
                         del argument2[n+1 : o+1]
-                        resultat_final = calcule_prioritaire(argument2)
+                        variable = []
+                        break
+                break
+         
+    #Calculer le reste
+    resultat_final = calcule_prioritaire(argument2)
 
-                        return print(resultat_final)
+    return print(resultat_final)
 
                      
 calcule_final(argument)
