@@ -57,24 +57,25 @@ def trouver_carre():
                                     for i3 in range(i2+1, len(plateau)):
                                         for j3 in range(j+1, j2):                #Calcule pour connaitre le plus grand carre         
                                             if (plateau[i3][j3] == obstable) and (((j2 - j) * (i3 - i)) > emplacement_carre[0]):
-                                                for xz in range(i, i3+1):
-                                                    print(xz)
+                                                for xz in range(i, i3):
+                                                    #Si obstacle entre le 1er obstacle et le dernier
                                                     if obstable in plateau[xz][j+1:j2]:
                                                         break
-
-                                                print(f"xz : {xz}, J : {j}, J2 : {j2}")
-                                                print(plateau[xz][j+1:j2])
-                                                del emplacement_carre[0:]
-                                                emplacement_carre.append((j2 - j) * (i3 - i))
-                                                emplacement_carre.extend([i,j,i2,j2,i3,j3])
-                                                print(emplacement_carre)
-
+                                                #Ajoute dans une variable les coordonées du plus grand carrés    
+                                                else:
+                                                    del emplacement_carre[0:]
+                                                    emplacement_carre.append((j2 - j) * (i3 - i))
+                                                    emplacement_carre.extend([i,j,i2,j2,i3,j3])
+                                                    print(emplacement_carre)
+    #Remplissage
     for f in range(emplacement_carre[1], emplacement_carre[5]):
         for fi in range(emplacement_carre[2]+1, emplacement_carre[4]):
+            #Si pas d'obstacle au dessu du 1e obstacle
             for xi in range(0, emplacement_carre[1]):
                 if obstable not in plateau[xi][emplacement_carre[2]+1:emplacement_carre[4]]:
                     plateau[xi][fi] = remplir  
-            plateau[f][fi] = remplir                                      
+            plateau[f][fi] = remplir  
+    #Affichage                                            
     for z in plateau:
         print(z)
 trouver_carre()
