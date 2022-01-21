@@ -124,7 +124,7 @@ def resoudre_laby():
     #Affiche. Enlever les nombre
     for sa in range(0, len(labyrynthe)):
         for sb in range(0, len(labyrynthe[0])):
-            if (labyrynthe[sa][sb].isnumeric()) and (labyrynthe[sa][sb] != '1'):
+            if (labyrynthe[sa][sb].isnumeric()) and (labyrynthe[sa][sb] != Entre):
                 labyrynthe[sa][sb] = ' ' 
 
     for finish in labyrynthe:
